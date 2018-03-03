@@ -1,5 +1,5 @@
-hash: 34cc2ce56e3e69d791db718893294148745d469d48953aca95053e17271b57f2
-updated: 2018-02-13T08:27:39.318767138+10:00
+hash: bbb708ec5a76c187257a547c0b8edfed3b2e990ba66ad1db7d1f00d7b7157d18
+updated: 2018-03-03T20:47:28.208191+10:00
 imports:
 - name: github.com/onsi/ginkgo
   version: 9eda700730cba42af70d53180f9dcce9266bc2bc
@@ -37,17 +37,17 @@ imports:
   - types
 testImports:
 - name: golang.org/x/net
-  version: 0ed95abb35c445290478a5348a7b38bb154135fd
+  version: f5dfe339be1d06f81b22525fe34671ee7d2c8904
   subpackages:
   - html
   - html/atom
   - html/charset
 - name: golang.org/x/sys
-  version: 2c42eef0765b9837fbdab12011af7830f55f88f0
+  version: 37707fdb30a5b38865cfb95e5aab41707daec7fd
   subpackages:
   - unix
 - name: golang.org/x/text
-  version: e19ae1496984b1c655b8044a65c0300a3c878dd3
+  version: 4e4a3210bb54bb31f6ab2cdca2edcc0b50c420c1
   subpackages:
   - encoding
   - encoding/charmap
