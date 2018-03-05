@@ -1,5 +1,16 @@
 package twelf
 
+var (
+	// DefaultLogger is a logger that only logs non-debug messages.
+	DefaultLogger Logger = &StandardLogger{CaptureDebug: false}
+
+	// DebugLogger is a logger that logs both debug and non-debug messages.
+	DebugLogger Logger = &StandardLogger{CaptureDebug: true}
+
+	// SilentLogger is a logger that does not log any messages.
+	SilentLogger Logger = DiscardLogger{}
+)
+
 // Logger is an interface for writing log messages.
 type Logger interface {
 	// Log writes an application log message formatted according to a format
