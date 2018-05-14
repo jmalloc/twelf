@@ -196,3 +196,12 @@ var _ = Describe("BufferedLogger", func() {
 		})
 	})
 })
+
+var _ = Describe("BufferedLogMessage", func() {
+	Describe("String", func() {
+		It("returns the log message", func() {
+			m := BufferedLogMessage{Message: "<message>"}
+			Expect(m.String()).To(Equal("<message>"))
+		})
+	})
+})

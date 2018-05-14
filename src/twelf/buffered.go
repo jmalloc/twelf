@@ -5,26 +5,20 @@ import (
 	"sync"
 )
 
-// BufferedLogger is an implementation of Logger that buffers log strings in
+// BufferedLogger is an implementation of Logger that buffers log messages in
 // memory.
 type BufferedLogger struct {
-	// CaptureDebug controls whether debug logs should be stored.
+	// CaptureDebug controls whether debug messages should be stored.
 	CaptureDebug bool
 
 	m        sync.RWMutex
 	messages []BufferedLogMessage
 }
 
-// BufferedLogMessage is a log message stored by a BufferedLogger
-type BufferedLogMessage struct {
-	Message string
-	IsDebug bool
-}
-
 // Log writes an application log message formatted according to a format
 // specifier.
 //
-// It should be ussed for messages that are intended for people responsible
+// It should be used for messages that are intended for people responsible
 // for operating the application, such as the end-user or operations staff.
 //
 // fmt is the format specifier, as per fmt.Printf(), etc.
@@ -36,12 +30,16 @@ func (l *BufferedLogger) Log(fmt string, v ...interface{}) {
 
 // LogString writes a pre-formatted application log message.
 //
-// It should be ussed for messages that are intended for people responsible
+// It should be used for messages that are intended for people responsible
 // for operating the application, such as the end-user or operations staff.
 func (l *BufferedLogger) LogString(s string) {
 	l.m.Lock()
 	defer l.m.Unlock()
-	l.messages = append(l.messages, BufferedLogMessage{s, false})
+
+	l.messages = append(
+		l.messages,
+		BufferedLogMessage{s, false},
+	)
 }
 
 // Debug writes a debug log message formatted according to a format
@@ -71,7 +69,11 @@ func (l *BufferedLogger) DebugString(s string) {
 	if l.CaptureDebug {
 		l.m.Lock()
 		defer l.m.Unlock()
-		l.messages = append(l.messages, BufferedLogMessage{s, true})
+
+		l.messages = append(
+			l.messages,
+			BufferedLogMessage{s, true},
+		)
 	}
 }
 
@@ -89,6 +91,7 @@ func (l *BufferedLogger) IsDebug() bool {
 func (l *BufferedLogger) Reset() {
 	l.m.Lock()
 	defer l.m.Unlock()
+
 	l.messages = nil
 }
 
@@ -97,7 +100,10 @@ func (l *BufferedLogger) Messages() []BufferedLogMessage {
 	l.m.RLock()
 	defer l.m.RUnlock()
 
-	return append([]BufferedLogMessage(nil), l.messages...)
+	return append(
+		[]BufferedLogMessage(nil),
+		l.messages...,
+	)
 }
 
 // TakeMessages returns the messages that have been logged and resets the logger
@@ -108,6 +114,7 @@ func (l *BufferedLogger) TakeMessages() []BufferedLogMessage {
 
 	m := l.messages
 	l.messages = nil
+
 	return m
 }
 
@@ -120,4 +127,14 @@ func (l *BufferedLogger) FlushTo(dest Logger) {
 			dest.LogString(m.Message)
 		}
 	}
+}
+
+// BufferedLogMessage is a log message stored by a BufferedLogger
+type BufferedLogMessage struct {
+	Message string
+	IsDebug bool
+}
+
+func (m BufferedLogMessage) String() string {
+	return m.Message
 }
