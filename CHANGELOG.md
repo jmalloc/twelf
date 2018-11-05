@@ -1,6 +1,6 @@
 # Changelog
 
-## Next Release
+## 1.2.0 (2018-11-06)
 
 - **[NEW]** Add global convenience functions that use a provided logger, or fallback to the default
 
