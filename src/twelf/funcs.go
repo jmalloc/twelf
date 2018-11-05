@@ -10,11 +10,7 @@ package twelf
 //
 // If l is nil, DefaultLogger is used.
 func Log(l Logger, fmt string, v ...interface{}) {
-	if l == nil {
-		l = DefaultLogger
-	}
-
-	l.Log(fmt, v...)
+	getLogger(l).Log(fmt, v...)
 }
 
 // LogString writes a pre-formatted application log message.
@@ -24,11 +20,7 @@ func Log(l Logger, fmt string, v ...interface{}) {
 //
 // If l is nil, DefaultLogger is used.
 func LogString(l Logger, s string) {
-	if l == nil {
-		l = DefaultLogger
-	}
-
-	l.LogString(s)
+	getLogger(l).LogString(s)
 }
 
 // Debug writes a debug log message formatted according to a format
@@ -43,11 +35,7 @@ func LogString(l Logger, s string) {
 //
 // If l is nil, DefaultLogger is used.
 func Debug(l Logger, fmt string, v ...interface{}) {
-	if l == nil {
-		l = DefaultLogger
-	}
-
-	l.Debug(fmt, v...)
+	getLogger(l).Debug(fmt, v...)
 }
 
 // DebugString writes a pre-formatted debug log message.
@@ -59,11 +47,7 @@ func Debug(l Logger, fmt string, v ...interface{}) {
 //
 // If l is nil, DefaultLogger is used.
 func DebugString(l Logger, s string) {
-	if l == nil {
-		l = DefaultLogger
-	}
-
-	l.DebugString(s)
+	getLogger(l).DebugString(s)
 }
 
 // IsDebug returns true if this logger will perform debug logging.
@@ -75,9 +59,14 @@ func DebugString(l Logger, s string) {
 //
 // If l is nil, DefaultLogger is used.
 func IsDebug(l Logger) bool {
-	if l == nil {
-		l = DefaultLogger
+	return getLogger(l).IsDebug()
+}
+
+// getLogger returns l, or DefaultLogger if l is nil.
+func getLogger(l Logger) Logger {
+	if l != nil {
+		return l
 	}
 
-	return l.IsDebug()
+	return DefaultLogger
 }
